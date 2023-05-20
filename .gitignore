@@ -1,0 +1,30 @@
+# Python files
+*.pyc
+__pycache__/
+
+# Dependencies
+venv/
+env/
+
+# Compiled files
+*.pyo
+*.pyd
+*.pyc
+
+# Logs
+*.log
+
+# Environment variables
+.env
+
+# Assets
+node_modules/
+static/uploads/
+
+# Editor files
+.vscode/
+.idea/
+*.iml
+
+# Database
+db.sqlite3

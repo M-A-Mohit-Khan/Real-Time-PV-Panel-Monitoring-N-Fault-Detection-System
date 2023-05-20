@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Arduino Project</title>
+  </head>
+  <body>
+    <h1>Flask API Call</h1>
+    <div id="data"></div>
+    <table style="border: 1px solid;border-collapse: collapse; width: 100%;">
+      <tr>
+        <th>Voltage</th>
+        <th>Current</th>
+        <th>Power</th>
+        <th>Temp</th>
+        <th>Irradiance</th>
+        <th>Time</th>
+        <th>Fault Status</th>
+      </tr>
+      {% for row in data %}
+      <tr>
+          {% for cell in row %}
+          <td>{{ cell }}</td>
+          {% endfor %}
+      </tr>
+      {% endfor %}
+  </table>
+
+    <script>
+      // Function to fetch and display data
+      function getData() {
+        fetch('/data')
+          .then((response) => response.json())
+          .then((data) => {
+            // Get the div element to display the data
+            const dataDiv = document.getElementById('data');
+
+            // Check if the data contains an error message
+            if ('msg' in data) {
+              dataDiv.innerText = data['msg'];
+            } else {
+              // Get the active condition from the data
+              const activeCondition = data[0].substring(25);
+
+              // Display the active condition in the div element
+              dataDiv.innerText = `The active condition is: ${activeCondition}`;
+            }
+          })
+          .catch((error) => console.error(error));
+      }
+
+      // Call the getData function every 5 seconds
+      setInterval(getData, 15000);
+    </script>
+  </body>
+</html>

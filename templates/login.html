@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>login</title>
+    <style>
+      body {
+        background-color: #f1f1f1;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      form {
+        background-color: #fff;
+        padding: 20px;
+        width: 300px;
+        margin: 0 auto;
+        box-shadow: 0px 0px 10px #888888;
+      }
+
+      input[type='text'],
+      input[type='password'] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+
+      button[type='submit'] {
+        background-color: #4caf50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      button[type='submit']:hover {
+        background-color: #45a049;
+      }
+
+      .container {
+        text-align: center;
+      }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $('#login-form').submit(function (event) {
+          event.preventDefault(); // prevent default form submission
+          var form_data = $(this).serialize(); // get form data
+          $.ajax({
+            url: '/login',
+            type: 'POST',
+            data: form_data,
+            dataType: 'json',
+            success: function (data) {
+              if (data.success) {
+                window.location.href =
+                  'http://127.0.0.1:5000/arduinodata';
+                // redirect to a success page or perform other actions
+              } else {
+                alert('Invalid username or password!');
+                // display an error message or perform other actions
+              }
+            },
+          });
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <h1>Login Form</h1>
+    <form id="login-form">
+      <label for="username">Username:</label><br />
+      <input type="text" id="username" name="username" /><br />
+      <label for="password">Password:</label><br />
+      <input type="password" id="password" name="password" /><br /><br />
+      <div class="container">
+        <button type="submit">Login</button>
+      </div>
+    </form>
+  </body>
+</html>
